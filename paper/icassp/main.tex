@@ -34,11 +34,9 @@ in closed form --- a cover along the adversary's estimate of the reference plus 
 payload in its orthogonal complement --- with no constraint-satisfaction search
 and no observation of honest updates. At $30\%$ malicious clients on Fashion-MNIST, a \emph{naive} backdoor already
 leaks through this defense --- but only intermittently, succeeding on $3$ of $5$
-seeds with no trust advantage ($1.04\times$ the honest score). Aiming the cover at the estimated anchor makes the attack reliable: our construction succeeds in all five tested seeds ($0.982\pm0.014$) by earning a $1.44\times$ trust advantage, against $3/5$ for the naive attempt. A random-direction cover, whose trust falls far below the honest score, succeeds in $0/5$ at $\tau=0.97$. The construction does not break an otherwise-robust defense; it turns an unreliable leak into a consistent one, and we identify the mechanism --- the anchor-aligned cover --- that does it. We will
-release the harness and all raw results.%
-% CAMERA-READY: make the repo public and uncomment the next line (drop the leading %),
-% then remove the "will" above so it reads "We release ...":
-% \footnote{\url{https://github.com/haozhou12/cpsubspace-fl-backdoor}}
+seeds with no trust advantage ($1.04\times$ the honest score). Aiming the cover at the estimated anchor makes the attack reliable: our construction succeeds in all five tested seeds ($0.982\pm0.014$) by earning a $1.44\times$ trust advantage, against $3/5$ for the naive attempt. A random-direction cover, whose trust falls far below the honest score, succeeds in $0/5$ at $\tau=0.97$. The construction does not break an otherwise-robust defense; it turns an unreliable leak into a consistent one, and we identify the mechanism --- the anchor-aligned cover --- that does it. We release
+the harness and all raw results at
+\url{https://github.com/haozhou12/cpsubspace-fl-backdoor}.
 \end{abstract}
 
 \begin{keywords}
@@ -69,10 +67,16 @@ direction; on the $(d\!-\!1)$-dimensional orthogonal complement the score is
 invariant, and norm equalization fixes magnitude, not direction. Second,
 empirically: at a high malicious fraction the defense is already porous --- a
 plain poisoned update slips through whenever its direction happens to correlate
-with the reference --- but unreliably. A closed-form cover aimed at the estimated reference lifts the adversary's trust above the honest score and plants the backdoor consistently across seeds. Related high-dimensional freedom has
-been used against Byzantine-robust aggregators~\cite{hidra} and by perturbations
-that stay inside the benign variance~\cite{alie}; neither targets a private-anchor
-trust score. Our contributions are:
+with the reference --- but unreliably. A closed-form cover aimed at the estimated reference lifts the adversary's trust above the honest score and plants the backdoor consistently across seeds. \emph{Related work.} FL backdoors have been built by model
+replacement~\cite{bagdasaryan}, an adversarial lens~\cite{bhagoji}, and
+distributed triggers~\cite{dba,badnets}, all optimizing the poisoned update; ours
+is closed form. Robust aggregation --- Krum~\cite{krum}, trimmed
+mean~\cite{trimmedmean}, similarity-based trust~\cite{fltrust,rflpa} --- filters
+malicious updates but remains vulnerable to shaped local poisoning~\cite{poisoning},
+a robustness question with a signal-processing
+lineage~\cite{spl_fl1}. High-dimensional freedom has been
+used against Byzantine aggregators~\cite{hidra} and within benign
+variance~\cite{alie}; we target the private-anchor trust score itself. Our contributions are:
 \begin{itemize}\setlength\itemsep{0pt}
   \item[(i)] a characterization of the feasible set left by cosine trust with
     norm equalization --- a sphere of dimension $d-2$ on which the defense cannot
@@ -92,8 +96,7 @@ outside the scope of this letter. Our claim is not that the attack is stronger t
 % ====================================================================
 \section{System and Threat Model}
 \label{sec:model}
-\noindent\textbf{Aggregation.} $n$ clients; in round $t$ client $i$ submits
-$g_i\in\mathbb{R}^d$ under SecAgg~\cite{secagg}. The server computes a reference
+\noindent\textbf{Aggregation.} $n$ clients run synchronous FL~\cite{fedavg}; in round $t$ client $i$ submits $g_i\in\mathbb{R}^d$ under SecAgg~\cite{secagg}. The server computes a reference
 $g_0$ from its private root set and, inside the protocol~\cite{rflpa}, assigns
 \begin{equation}
   \mathrm{TS}_i=\max\!\bigl(0,\cos(g_i,g_0)\bigr),\qquad
@@ -198,8 +201,7 @@ by starvation as $\sqrt{1-\tau^{2}}\!\to\!0$.
 \label{sec:exp}
 
 \noindent\textbf{Setup.} Fashion-MNIST, a two-convolution CNN with
-GroupNorm~\cite{groupnorm} (BatchNorm statistics are buffers and are not
-aggregated under update-based FL), $20$ clients with an IID split disjoint from a
+GroupNorm~\cite{groupnorm} (BatchNorm statistics are buffers, not aggregated under update-based FL), $20$ clients with an IID split disjoint from a
 $100$-sample root set, $30\%$ malicious, $30$ local SGD steps per round,
 $120$ rounds. The adversary estimates $\hat e_0$ with $10$ local steps on its own
 data. Trigger: a $3\times3$ patch, target class~$0$; ASR is measured on triggered
@@ -278,10 +280,9 @@ $\tau=0.5$ and $0.17$ at $\tau=0.3$, tracking the clamping just described.
 fraction drops --- $1/5$ at $10\%$ and $3/5$ at $20\%$, always bimodal --- and our construction likewise thins out as the fraction drops: at $\tau=0.7$ it reaches $4/5$ at $20\%$ ($0.747\pm0.365$) and $0/5$ at $10\%$ ($0.410\pm0.293$), and at $\tau=0.97$ it is $1/3$ and $0/3$. At $30\%$ the $1.44\times$ trust edge raises the malicious weight share to $0.39$; reliable planting at $10\%$ is beyond both attacks in this setting.
 
 \noindent\textbf{Onset.} ASR lags convergence: mean clean accuracy is within
-$0.05$ of its final value from round~$25$ (where mean ASR is still $0.20$), and
-individual seeds first reach ASR $0.5$ at rounds $25$ to $44$.
-A separate $40$-round budget yields $0.512\pm0.267$. We make no claim its onset
-can be predicted.
+$0.05$ of its final value by round~$25$ (mean ASR $0.20$ there), while seeds first
+reach ASR $0.5$ at rounds $25$--$44$; a $40$-round budget yields $0.512\pm0.267$.
+We do not claim the onset is predictable.
 
 \noindent\textbf{Cross-dataset check.} On CIFAR-10 with the \emph{same} compact
 CNN (a weak model here: attack-free clean accuracy $0.550\pm0.024$, $n{=}5$), the
