@@ -28,7 +28,10 @@ payload in its orthogonal complement --- with no constraint-satisfaction search
 and no observation of honest updates. At $30\%$ malicious clients on Fashion-MNIST, a \emph{naive} backdoor already
 leaks through this defense --- but only intermittently, succeeding on $3$ of $5$
 seeds with no trust advantage ($1.04\times$ the honest score). Aiming the cover at the estimated anchor makes the attack reliable: our construction succeeds in all five tested seeds ($0.982\pm0.014$) by earning a $1.44\times$ trust advantage, against $3/5$ for the naive attempt. A random-direction cover, whose trust falls far below the honest score, succeeds in $0/5$ at $\tau=0.97$. The construction does not break an otherwise-robust defense; it turns an unreliable leak into a consistent one, and we identify the mechanism --- the anchor-aligned cover --- that does it. We will
-release the harness and all raw results.% TODO(author): replace with a public URL before camera-ready.
+release the harness and all raw results.%
+% CAMERA-READY: make the repo public and uncomment the next line (drop the leading %),
+% then remove the "will" above so it reads "We release ...":
+% \footnote{\url{https://github.com/haozhou12/cpsubspace-fl-backdoor}}
 \end{abstract}
 
 \begin{keywords}
