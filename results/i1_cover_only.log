@@ -1,0 +1,74 @@
+  [norm s0] r00 clean=0.458 ASR=0.184 TSmal=0.448 TSben=0.417 cos=0.448
+  [norm s0] r10 clean=0.752 ASR=0.032 TSmal=0.397 TSben=0.257 cos=0.397
+  [norm s0] r20 clean=0.796 ASR=0.063 TSmal=0.383 TSben=0.274 cos=0.383
+  [norm s0] r30 clean=0.807 ASR=0.064 TSmal=0.278 TSben=0.200 cos=0.278
+  [norm s0] r40 clean=0.815 ASR=0.065 TSmal=0.339 TSben=0.285 cos=0.339
+  [norm s0] r50 clean=0.826 ASR=0.021 TSmal=0.187 TSben=0.280 cos=0.187
+  [norm s0] r60 clean=0.783 ASR=0.013 TSmal=0.405 TSben=0.228 cos=0.405
+  [norm s0] r70 clean=0.832 ASR=0.010 TSmal=0.139 TSben=0.098 cos=0.139
+  [norm s0] r80 clean=0.843 ASR=0.015 TSmal=0.244 TSben=0.152 cos=0.244
+  [norm s0] r90 clean=0.836 ASR=0.001 TSmal=0.354 TSben=0.296 cos=0.354
+  [norm s0] r100 clean=0.826 ASR=0.000 TSmal=0.146 TSben=0.145 cos=0.146
+  [norm s0] r110 clean=0.823 ASR=0.000 TSmal=0.086 TSben=0.108 cos=0.086
+  [norm s0] r119 clean=0.860 ASR=0.023 TSmal=0.093 TSben=0.118 cos=0.093
+fmnist|cpsub|norm|tau1.0|mf0.3|s0: final clean=0.860 ASR=0.023 (272s)
+  [norm s1] r00 clean=0.461 ASR=0.008 TSmal=0.455 TSben=0.459 cos=0.455
+  [norm s1] r10 clean=0.734 ASR=0.035 TSmal=0.313 TSben=0.228 cos=0.313
+  [norm s1] r20 clean=0.775 ASR=0.007 TSmal=0.230 TSben=0.151 cos=0.230
+  [norm s1] r30 clean=0.794 ASR=0.002 TSmal=0.243 TSben=0.167 cos=0.243
+  [norm s1] r40 clean=0.821 ASR=0.003 TSmal=0.342 TSben=0.173 cos=0.342
+  [norm s1] r50 clean=0.841 ASR=0.004 TSmal=0.361 TSben=0.227 cos=0.361
+  [norm s1] r60 clean=0.836 ASR=0.000 TSmal=0.210 TSben=0.161 cos=0.210
+  [norm s1] r70 clean=0.849 ASR=0.005 TSmal=0.205 TSben=0.131 cos=0.205
+  [norm s1] r80 clean=0.835 ASR=0.012 TSmal=0.270 TSben=0.194 cos=0.270
+  [norm s1] r90 clean=0.842 ASR=0.006 TSmal=0.314 TSben=0.147 cos=0.314
+  [norm s1] r100 clean=0.844 ASR=0.015 TSmal=0.185 TSben=0.132 cos=0.185
+  [norm s1] r110 clean=0.829 ASR=0.009 TSmal=0.156 TSben=0.134 cos=0.156
+  [norm s1] r119 clean=0.881 ASR=0.008 TSmal=0.279 TSben=0.219 cos=0.279
+fmnist|cpsub|norm|tau1.0|mf0.3|s1: final clean=0.881 ASR=0.008 (228s)
+  [norm s2] r00 clean=0.419 ASR=0.000 TSmal=0.566 TSben=0.504 cos=0.566
+  [norm s2] r10 clean=0.787 ASR=0.030 TSmal=0.292 TSben=0.201 cos=0.292
+  [norm s2] r20 clean=0.811 ASR=0.015 TSmal=0.290 TSben=0.164 cos=0.290
+  [norm s2] r30 clean=0.852 ASR=0.006 TSmal=0.217 TSben=0.181 cos=0.217
+  [norm s2] r40 clean=0.866 ASR=0.014 TSmal=0.024 TSben=0.114 cos=0.024
+  [norm s2] r50 clean=0.868 ASR=0.032 TSmal=0.240 TSben=0.177 cos=0.240
+  [norm s2] r60 clean=0.868 ASR=0.021 TSmal=0.212 TSben=0.156 cos=0.212
+  [norm s2] r70 clean=0.854 ASR=0.002 TSmal=0.220 TSben=0.215 cos=0.220
+  [norm s2] r80 clean=0.862 ASR=0.004 TSmal=0.191 TSben=0.135 cos=0.191
+  [norm s2] r90 clean=0.822 ASR=0.001 TSmal=0.165 TSben=0.175 cos=0.165
+  [norm s2] r100 clean=0.863 ASR=0.002 TSmal=0.209 TSben=0.175 cos=0.209
+  [norm s2] r110 clean=0.864 ASR=0.003 TSmal=0.145 TSben=0.123 cos=0.145
+  [norm s2] r119 clean=0.882 ASR=0.033 TSmal=0.115 TSben=0.126 cos=0.115
+fmnist|cpsub|norm|tau1.0|mf0.3|s2: final clean=0.882 ASR=0.033 (143s)
+  [norm s3] r00 clean=0.623 ASR=0.022 TSmal=0.493 TSben=0.543 cos=0.493
+  [norm s3] r10 clean=0.765 ASR=0.050 TSmal=0.267 TSben=0.113 cos=0.267
+  [norm s3] r20 clean=0.816 ASR=0.062 TSmal=0.331 TSben=0.184 cos=0.331
+  [norm s3] r30 clean=0.848 ASR=0.063 TSmal=0.296 TSben=0.182 cos=0.296
+  [norm s3] r40 clean=0.843 ASR=0.026 TSmal=0.153 TSben=0.116 cos=0.153
+  [norm s3] r50 clean=0.864 ASR=0.018 TSmal=0.297 TSben=0.217 cos=0.297
+  [norm s3] r60 clean=0.860 ASR=0.032 TSmal=0.230 TSben=0.152 cos=0.230
+  [norm s3] r70 clean=0.848 ASR=0.033 TSmal=0.322 TSben=0.116 cos=0.322
+  [norm s3] r80 clean=0.842 ASR=0.005 TSmal=0.237 TSben=0.119 cos=0.237
+  [norm s3] r90 clean=0.883 ASR=0.024 TSmal=0.000 TSben=0.012 cos=-0.017
+  [norm s3] r100 clean=0.852 ASR=0.009 TSmal=0.315 TSben=0.131 cos=0.315
+  [norm s3] r110 clean=0.867 ASR=0.007 TSmal=0.238 TSben=0.113 cos=0.238
+  [norm s3] r119 clean=0.866 ASR=0.012 TSmal=0.166 TSben=0.086 cos=0.166
+fmnist|cpsub|norm|tau1.0|mf0.3|s3: final clean=0.866 ASR=0.012 (150s)
+  [norm s4] r00 clean=0.560 ASR=0.025 TSmal=0.548 TSben=0.528 cos=0.548
+  [norm s4] r10 clean=0.791 ASR=0.057 TSmal=0.252 TSben=0.133 cos=0.252
+  [norm s4] r20 clean=0.802 ASR=0.074 TSmal=0.376 TSben=0.282 cos=0.376
+  [norm s4] r30 clean=0.830 ASR=0.047 TSmal=0.367 TSben=0.222 cos=0.367
+  [norm s4] r40 clean=0.854 ASR=0.044 TSmal=0.077 TSben=0.062 cos=0.077
+  [norm s4] r50 clean=0.842 ASR=0.036 TSmal=0.306 TSben=0.169 cos=0.306
+  [norm s4] r60 clean=0.845 ASR=0.021 TSmal=0.216 TSben=0.154 cos=0.216
+  [norm s4] r70 clean=0.813 ASR=0.035 TSmal=0.330 TSben=0.209 cos=0.330
+  [norm s4] r80 clean=0.825 ASR=0.036 TSmal=0.325 TSben=0.211 cos=0.325
+  [norm s4] r90 clean=0.840 ASR=0.026 TSmal=0.264 TSben=0.183 cos=0.264
+  [norm s4] r100 clean=0.841 ASR=0.024 TSmal=0.152 TSben=0.112 cos=0.152
+  [norm s4] r110 clean=0.825 ASR=0.030 TSmal=0.268 TSben=0.096 cos=0.268
+  [norm s4] r119 clean=0.875 ASR=0.018 TSmal=0.221 TSben=0.223 cos=0.221
+fmnist|cpsub|norm|tau1.0|mf0.3|s4: final clean=0.875 ASR=0.018 (150s)
+
+===== SUMMARY =====
+fmnist cpsub norm  n=5 finalASR 0.019+-0.009 [0.023, 0.008, 0.033, 0.012, 0.018] succ(>=0.8)=0/5 | clean 0.873+-0.009
+total 944s

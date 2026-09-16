@@ -1,0 +1,316 @@
+% ICASSP 2027 -- 4 pages technical + page 5 references only.
+% EVERY number here must be reproducible by code/verify_paper.py from results/*.json.
+% No number from the lost pre-2026-09-11 runs.
+\documentclass{article}
+\usepackage{spconf,amsmath,amssymb,graphicx,booktabs,url}
+\usepackage[hidelinks]{hyperref}
+
+\title{Cosine-Similarity Trust Constrains One Direction:\\ A Closed-Form Subspace Backdoor Against Norm-Equalized Robust Aggregation}
+%
+% ICASSP is single-blind: authors are named. Corresponding author unmarked ---
+% add \thanks{...} on the author line for funding, and a School/Dept if desired.
+\name{Hao Zhou, Hua Dai$^{\dagger}$, Letian Sha$^{\dagger}$, Geng Yang\thanks{$^{\dagger}$Corresponding authors.}}
+\address{Nanjing University of Posts and Telecommunications, Nanjing, China}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Secure aggregation hides individual client updates from the server, while poisoning
+defenses need to inspect them. Similarity-based trust aggregation (FLTrust, RFLPA)
+reconciles the two by scoring each client with a single scalar --- the cosine
+between its update and a private server-side reference --- and equalizing update
+norms. We show that this pair of guards fixes the \emph{magnitude} of the
+component orthogonal to the reference, $\|g_0\|\sqrt{1-\tau^{2}}$ at cosine
+$\tau$, and leaves its \emph{direction} free. A backdoor can therefore be written
+in closed form --- a cover along the adversary's estimate of the reference plus a
+payload in its orthogonal complement --- with no constraint-satisfaction search
+and no observation of honest updates. At $30\%$ malicious clients on Fashion-MNIST, a \emph{naive} backdoor already
+leaks through this defense --- but only intermittently, succeeding on $3$ of $5$
+seeds with no trust advantage ($1.04\times$ the honest score). Aiming the cover at the estimated anchor makes the attack reliable: our construction succeeds in all five tested seeds ($0.982\pm0.014$) by earning a $1.44\times$ trust advantage, against $3/5$ for the naive attempt. A random-direction cover, whose trust falls far below the honest score, succeeds in $0/5$ at $\tau=0.97$. The construction does not break an otherwise-robust defense; it turns an unreliable leak into a consistent one, and we identify the mechanism --- the anchor-aligned cover --- that does it. We will
+release the harness and all raw results.% TODO(author): replace with a public URL before camera-ready.
+\end{abstract}
+
+\begin{keywords}
+Federated learning, robust aggregation, secure aggregation, backdoor, cosine similarity
+\end{keywords}
+
+% ====================================================================
+\section{Introduction}
+\label{sec:intro}
+Federated learning (FL) is expected to give two guarantees at once. Secure
+aggregation (SecAgg)~\cite{secagg} reveals only the sum of client updates to the
+server; robust aggregation defends the global model against clients that submit
+poisoned updates. The two pull in opposite directions: a poisoning defense must
+score individual updates, and SecAgg exists to make them invisible.
+
+The dominant reconciliation is \emph{similarity-based trust}. FLTrust~\cite{fltrust}
+defines it: the server keeps a small clean root set, computes a reference update
+$g_0$ from it, scores each client by the cosine between its update and $g_0$,
+normalizes updates to $\|g_0\|$, and takes the trust-weighted mean.
+RFLPA~\cite{rflpa} implements the same rule under secure aggregation, evaluating
+the score through a privacy-preserving dot-product protocol so the server never
+sees an individual update, and keeps $g_0$ private --- a client that cannot see
+the reference should not be able to aim at it.
+
+This paper shows that the statistic is weaker than that intuition suggests, in
+two stages. First, structurally: a cosine score constrains an update along one
+direction; on the $(d\!-\!1)$-dimensional orthogonal complement the score is
+invariant, and norm equalization fixes magnitude, not direction. Second,
+empirically: at a high malicious fraction the defense is already porous --- a
+plain poisoned update slips through whenever its direction happens to correlate
+with the reference --- but unreliably. A closed-form cover aimed at the estimated reference lifts the adversary's trust above the honest score and plants the backdoor consistently across seeds. Related high-dimensional freedom has
+been used against Byzantine-robust aggregators~\cite{hidra} and by perturbations
+that stay inside the benign variance~\cite{alie}; neither targets a private-anchor
+trust score. Our contributions are:
+\begin{itemize}\setlength\itemsep{0pt}
+  \item[(i)] a characterization of the feasible set left by cosine trust with
+    norm equalization --- a sphere of dimension $d-2$ on which the defense cannot
+    distinguish points --- and of the adversary's payload budget on it
+    (Sec.~\ref{sec:attack});
+  \item[(ii)] a closed-form, norm-matched backdoor construction that needs no
+    constraint-satisfaction search and no honest update, with an exact gray-box
+    trust band (Sec.~\ref{sec:attack});
+  \item[(iii)] an evaluation against the \emph{published} unconditional normalization rule
+    showing that the anchor-aligned cover lifts an intermittent naive backdoor ($3/5$ seeds) to all five tested seeds by earning a $1.44\times$ trust advantage, that a random cover earns none and succeeds $0/5$ at $\tau{=}0.97$, and a $\tau$ sweep exhibiting two failure modes consistent with the analysis
+    (Sec.~\ref{sec:exp}).
+\end{itemize}
+We do not compare against optimization-based adaptive attacks~\cite{autoadapt}:
+we did not locate a public implementation, and a faithful reimplementation is
+outside the scope of this letter. Our claim is not that the attack is stronger than prior poisoning, but that the geometry makes it \emph{closed-form and reliable} where a naive attempt is a coin flip.
+
+% ====================================================================
+\section{System and Threat Model}
+\label{sec:model}
+\noindent\textbf{Aggregation.} $n$ clients; in round $t$ client $i$ submits
+$g_i\in\mathbb{R}^d$ under SecAgg~\cite{secagg}. The server computes a reference
+$g_0$ from its private root set and, inside the protocol~\cite{rflpa}, assigns
+\begin{equation}
+  \mathrm{TS}_i=\max\!\bigl(0,\cos(g_i,g_0)\bigr),\qquad
+  \bar g_i=\frac{\|g_0\|}{\|g_i\|}\,g_i ,
+  \label{eq:ts}
+\end{equation}
+i.e.\ every update is normalized to the reference norm (RFLPA Eq.~3), and takes
+$G=\sum_i\mathrm{TS}_i\bar g_i/\sum_i\mathrm{TS}_i$. We also evaluate the
+one-sided variant $\bar g_i=g_i\min(1,\|g_0\|/\|g_i\|)$, which leaves updates
+shorter than $\|g_0\|$ unchanged. As $\cos$ is scale-invariant the two rules give
+identical trust; they differ only in the mass a short honest update contributes.
+$g_0$ is never released; RFLPA does distribute its norm $\|g_0\|$.
+
+\noindent\textbf{Adversary (gray-box).} A fixed fraction $\rho$ of clients
+($30\%$ unless stated) is malicious and may coordinate. They know \eqref{eq:ts},
+the current global model, and $\|g_0\|$. They do \emph{not} know the reference
+direction, the root set, or any honest update --- SecAgg denies the latter two.
+They substitute an estimate $\hat e_0$ of $g_0/\|g_0\|$ computed from their own
+data. The goal is a backdoor: inputs bearing a trigger are classified into a
+target label while clean accuracy is preserved. The server is honest; privacy
+attacks on SecAgg~\cite{graddisagg,eluding} are out of scope.
+
+% ====================================================================
+\section{Closed-Form Subspace Construction}
+\label{sec:attack}
+
+\subsection{What the two guards leave free}
+For \emph{any} update with $\|g\|=R$ and $\cos(g,a)=\tau$ against a reference $a$,
+the component along $a$ is $\tau R$ and the residual orthogonal to $a$ has norm
+\begin{equation}
+  \bigl\|g-\langle g,\hat a\rangle\hat a\bigr\| = R\sqrt{1-\tau^{2}},
+  \label{eq:budget}
+\end{equation}
+independently of how the residual is oriented. Trust and normalization therefore
+fix the payload's \emph{magnitude} and leave its \emph{direction} free: at given
+$(R,\tau)$ the feasible set is a sphere of dimension $d-2$, and with respect to
+the server's own anchor every point on it is equally acceptable. The gray-box
+case, where the adversary can only aim at an estimate of that anchor, is treated
+in Sec.~\ref{sec:graybox}.
+
+\subsection{Construction}
+Fig.~\ref{fig:geom} summarizes the geometry. Let $b$ be a local update on the
+poisoned objective. Remove its anchor component and normalize,
+\begin{equation}
+  v=\frac{b-\langle b,\hat e_0\rangle\hat e_0}{\|b-\langle b,\hat e_0\rangle\hat e_0\|},
+  \qquad \langle v,\hat e_0\rangle=0,\ \|v\|=1,
+  \label{eq:payload}
+\end{equation}
+and for a scalar $\tau\in(0,1)$ let every colluding client submit
+\begin{equation}
+  g_A=\|g_0\|\bigl(\tau\,\hat e_0+\sqrt{1-\tau^{2}}\;v\bigr),
+  \label{eq:attack}
+\end{equation}
+the \emph{cover} and the \emph{payload}. Since $\hat e_0\perp v$ are unit vectors,
+$\|g_A\|=\|g_0\|$ exactly, so under either normalization rule $\bar g_A=g_A$ and
+the payload arrives with its full magnitude $\|g_0\|\sqrt{1-\tau^{2}}$. Under the
+unconditional rule the submitted scale is immaterial, since every update is
+rescaled to $\|g_0\|$; under the one-sided clip any scale $\ge\|g_0\|$ gives the
+same result. Under a perfect anchor $\cos(g_A,g_0)=\tau$, so $\tau$ is the trust
+score itself; and among all $g$ with $\|g\|=\|g_0\|$ and trust $\tau$,
+\eqref{eq:attack} is the one that spends the entire budget \eqref{eq:budget} on
+the backdoor direction. Each round costs the local training that produces $b$ (in our implementation, ten SGD steps to estimate $\hat e_0$ and thirty on the poisoned objective) and one $O(d)$ projection; there is no loop to satisfy the trust and norm constraints and no server feedback, which is the structural difference from adaptive poisoning.
+
+\subsection{Gray-box trust band}
+\label{sec:graybox}
+In practice $\hat e_0\neq\hat g_0\triangleq g_0/\|g_0\|$. With
+$\delta=\angle(\hat e_0,\hat g_0)$,
+\begin{equation}
+  \cos(g_A,g_0)=\underbrace{\tau\cos\delta}_{\text{controlled}}
+  +\underbrace{\sqrt{1-\tau^{2}}\,\langle v,\hat g_0\rangle}_{\text{residual}},
+  \label{eq:true}
+\end{equation}
+where the residual is not chosen by the adversary: $v\perp\hat e_0$ but not
+$\perp g_0$. Since $|\langle v,\hat g_0\rangle|\le\sin\delta$, the true cosine
+lies between $\tau\cos\delta\mp\sqrt{1-\tau^{2}}\sin\delta$, i.e.
+\begin{equation}
+  \cos(\alpha+\delta)\le\cos(g_A,g_0)\le\cos(\alpha-\delta),\quad\alpha=\arccos\tau,
+  \label{eq:band}
+\end{equation}
+tight when $v\in\mathrm{span}(\hat e_0,\hat g_0)$. Two consequences follow.
+First, the clamp in \eqref{eq:ts} zeroes the adversary once the sum in
+\eqref{eq:true} is nonpositive; the controlled term $\tau\cos\delta$ stays
+positive while the anchor estimate beats chance, and shrinks with a poor
+estimate. Second, the lever the adversary holds is the payload budget
+$\sqrt{1-\tau^{2}}$, which \emph{decreases} with $\tau$: raising $\tau$ trades
+payload for trust. Neither limit is the whole story --- Sec.~\ref{sec:exp} sweeps
+$\tau$ and finds a seed failing by clamping at low $\tau$ and every seed failing
+by starvation as $\sqrt{1-\tau^{2}}\!\to\!0$.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figs/fig1_geometry.pdf}
+  \caption{Geometry of \eqref{eq:attack}. The cover fixes the cosine to the
+  \emph{estimated} anchor at $\tau$; the payload rides in the orthogonal
+  complement with magnitude $\|g_0\|\sqrt{1-\tau^{2}}$; $\|g_A\|=\|g_0\|$ so
+  normalization is the identity on $g_A$.}
+  \label{fig:geom}
+\end{figure}
+
+% ====================================================================
+\section{Experiments}
+\label{sec:exp}
+
+\noindent\textbf{Setup.} Fashion-MNIST, a two-convolution CNN with
+GroupNorm~\cite{groupnorm} (BatchNorm statistics are buffers and are not
+aggregated under update-based FL), $20$ clients with an IID split disjoint from a
+$100$-sample root set, $30\%$ malicious, $30$ local SGD steps per round,
+$120$ rounds. The adversary estimates $\hat e_0$ with $10$ local steps on its own
+data. Trigger: a $3\times3$ patch, target class~$0$; ASR is measured on triggered
+\emph{non-target} test inputs. Unless stated, $\tau=0.97$ and the published
+unconditional rule \eqref{eq:ts} is used. We evaluate the unquantized aggregation rule \eqref{eq:ts} in a centralized harness and do not implement RFLPA's cryptographic protocol; FLTrust defines the rule, RFLPA realizes it securely. Numbers are means $\pm$ population s.d.\ over seeds, with per-seed values released; we never report a maximum over
+seeds. GPU training is not bitwise deterministic, so re-running a seed can move
+final ASR by a few points; success counts for cells near the $0.8$ threshold are
+therefore indicative.
+
+\noindent\textbf{Main result: the defense is porous, the cover makes it
+reliable (Table~\ref{tab:main}, Fig.~\ref{fig:mech}).} A \emph{naive} backdoor
+--- the poisoned local update submitted directly, no cover, no projection ---
+already leaks through at $30\%$ malicious clients, but only when its own direction happens to earn positive trust: it succeeds in exactly the $3/5$ seeds whose update clears the cosine clamp (mean $\overline{\mathrm{TS}}_{\mathrm{mal}}=0.076$ for the successes versus $0.004$ for the two failures), a bimodal outcome ($0.675\pm0.399$; per-seed ASR $0.05$ to $1.0$) with no trust advantage ($1.04\times$ the honest score). The anchor-aligned cover removes this dependence on chance: it lifts the malicious trust to $1.44\times$ and plants the backdoor in all five tested seeds ($0.982\pm0.014$). The advantage comes from the alignment, not from submitting a norm-matched update at all: a random-direction cover earns trust far below the honest score ($0.09\times$) and succeeds in $0/5$. The result is rule-invariant: under the one-sided clip the
+construction reaches $0.996\pm0.003$ (paired difference $-0.014$, $p=0.073$). It
+costs $2.6$ clean-accuracy points at this $\tau$ ($0.861$ vs $0.887$ attack-free,
+Welch $p=0.013$).
+
+\begin{table}[t]
+  \centering\small
+  \caption{Fashion-MNIST, 120 rounds, 30\% malicious. Final ASR / clean accuracy
+  (mean $\pm$ s.d.); succ.\ = seeds with ASR $\ge0.8$; trust = malicious over honest mean $\mathrm{TS}$ (each averaged over seeds and the last 30 rounds; each row uses its own honest scores). Norm.\ = published rule \eqref{eq:ts}; clip = one-sided
+  variant. All rows $n{=}5$ except none ($n{=}3$).}
+  \label{tab:main}
+  \setlength{\tabcolsep}{3pt}
+  \begin{tabular}{@{}l@{\hspace{4pt}}cccc@{}}
+    \toprule
+    Rule / attack & ASR & succ. & clean & trust \\
+    \midrule
+    norm. / none                & $0.007\pm0.003$ & 0/3 & $0.887$ & --- \\
+    norm. / naive backdoor      & $0.675\pm0.399$ & 3/5 & $0.875$ & $1.04\times$ \\
+    norm. / random cover        & $0.029\pm0.037$ & 0/5 & $0.881$ & $0.09\times$ \\
+    norm. / ours $\tau{=}0.97$  & $\mathbf{0.982\pm0.014}$ & 5/5 & $0.861$ & $\mathbf{1.44\times}$ \\
+    clip / ours $\tau{=}0.97$   & $0.996\pm0.003$ & 5/5 & $0.857$ & --- \\
+    norm. / ours $\tau{=}0.7$   & $0.977\pm0.046$ & 5/5 & $0.878$ & $1.43\times$ \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figs/fig_mech.pdf}
+  \caption{Per-seed final ASR at $30\%$ malicious (bars are means). A naive
+  backdoor is bimodal --- a coin flip; a random-direction cover fails; the
+  anchor-aligned cover succeeds in every seed.}
+  \label{fig:mech}
+\end{figure}
+
+\noindent\textbf{Two failure modes (Fig.~\ref{fig:tau}).} Sweeping $\tau$ at
+$30\%$ malicious clients ($n{=}5$ per point), the attack succeeds in every seed
+at $\tau\in\{0.7,0.85,0.97\}$ and collapses to $0.492\pm0.144$ ($0/5$) at
+$\tau=0.995$, where the payload budget $\sqrt{1-\tau^{2}}$ is $0.10$; the
+adversary's mean trust is still positive there
+($\mathrm{TS}_{\mathrm{mal}}=0.21$), so this end is payload starvation, not the
+clamp. Below $0.7$, \emph{one} seed of five fails at both $\tau=0.5$ and
+$\tau=0.3$ (ASR $0.158$, $0.051$); it has the poorest anchor estimate of the
+five ($\cos(\hat e_0,g_0)$ averages $-0.07$ over the last thirty rounds at
+$\tau=0.5$, versus $+0.01$ to $+0.16$ for the others), so its controlled term
+$\tau\cos\delta$ cannot keep the sum positive and \eqref{eq:ts} clamps it to
+$0$ in over $90\%$ of rounds; at $\tau=0.7$ the same seed is clamped in $73\%$ of
+rounds and still reaches ASR $0.886$. Both ends are consistent with the limits of \eqref{eq:true}; we do not claim a universal sweet spot. The adversary's mean per-round
+aggregate share (its fraction of $\sum_i\mathrm{TS}_i\|\bar g_i\|$, last thirty rounds) is $0.34$--$0.38$ over $\tau\in[0.7,0.995]$ but falls to $0.25$ at
+$\tau=0.5$ and $0.17$ at $\tau=0.3$, tracking the clamping just described.
+
+\begin{figure}[t]
+  \centering
+  \includegraphics[width=\columnwidth]{figs/fig3_tau.pdf}
+  \caption{$\tau$ sweep (Fashion-MNIST, 120 rounds, 30\% malicious, published
+  rule; $n{=}5$, dots are individual seeds). Low $\tau$ fails by clamping in one
+  seed; high $\tau$ fails every seed by payload starvation.}
+  \label{fig:tau}
+\end{figure}
+
+\noindent\textbf{Where the clean cost comes from.} The cost is not monotone in $\tau$ (it rises to $2.8$ points at $\tau=0.85$ then falls). Two component swaps place it with the cover, not the backdoor. A random orthogonal payload drives ASR to the no-attack level yet still costs $2.1$ points at $\tau=0.97$ and $0.9$ at $\tau=0.7$; a cover-only update ($\tau=1$, no payload) costs $1.4$, against $2.6$ for the full attack. Clean loss thus occurs without a successful backdoor; the payload direction is not what the operator pays for. We do not further separate the cover and payload contributions.
+
+\noindent\textbf{Malicious fraction.} The naive backdoor stays a lottery as the
+fraction drops --- $1/5$ at $10\%$ and $3/5$ at $20\%$, always bimodal --- and our construction likewise thins out as the fraction drops: at $\tau=0.7$ it reaches $4/5$ at $20\%$ ($0.747\pm0.365$) and $0/5$ at $10\%$ ($0.410\pm0.293$), and at $\tau=0.97$ it is $1/3$ and $0/3$. At $30\%$ the $1.44\times$ trust edge raises the malicious weight share to $0.39$; reliable planting at $10\%$ is beyond both attacks in this setting.
+
+\noindent\textbf{Onset.} ASR lags convergence: mean clean accuracy is within
+$0.05$ of its final value from round~$25$ (where mean ASR is still $0.20$), and
+individual seeds first reach ASR $0.5$ at rounds $25$ to $44$.
+A separate $40$-round budget yields $0.512\pm0.267$. We make no claim its onset
+can be predicted.
+
+\noindent\textbf{Cross-dataset check.} On CIFAR-10 with the \emph{same} compact
+CNN (a weak model here: attack-free clean accuracy $0.550\pm0.024$, $n{=}5$), the
+construction reaches ASR $0.946\pm0.023$ ($5/5$) at $\tau=0.7$ and
+$0.831\pm0.035$ ($2/3$, $n{=}3$) at $\tau=0.97$, against $0.040$ attack-free.
+The CIFAR-10 clean costs are $6.0$ points ($p=0.004$, $n{=}5$ vs $5$) at $\tau=0.7$ and $9.8$ ($p=0.04$, $n{=}3$ vs $5$) at $\tau=0.97$, both larger than on Fashion-MNIST, where the cost is $2.6$ points ($p=0.013$) at $\tau=0.97$ and under one point (not significant) at $\tau=0.7$. This shows the construction is not specific to one dataset; it is not a claim about large models.
+
+\noindent\textbf{Untargeted controls.} Two classical manipulations of a
+\emph{clean} local update --- scaling by $10$ and sign flipping --- give ASR
+$0.008\pm0.004$ and $0.029\pm0.009$ ($n{=}3$). Neither attempts the trigger, so
+low ASR is not evidence of rejection. Scaling is neutralized exactly by
+\eqref{eq:ts} (clean accuracy $0.889$, versus $0.887$ attack-free). Sign flipping
+is \emph{not} rejected: mean malicious trust is positive in $71$--$77\%$ of
+rounds and it costs $7.2$ points of clean accuracy ($p=0.06$). It is simply not a
+backdoor.
+
+% ====================================================================
+\section{Conclusion}
+\label{sec:concl}
+Cosine-similarity trust with norm equalization constrains one direction of a
+client update and fixes the magnitude, but not the direction, of everything
+orthogonal to it. A closed-form, norm-matched construction exploits exactly that:
+it plants a backdoor under the published RFLPA rule with no constraint-satisfaction
+search. Its clean-accuracy cost --- $2.6$ points at $\tau=0.97$ on Fashion-MNIST, smaller at $\tau=0.7$, larger on CIFAR-10 --- is incurred by the cover, not the backdoor payload: a random or absent payload costs nearly as much while planting nothing. The analysis suggests two failure mechanisms, clamping of a poor anchor estimate and payload starvation, and both appear in the sweep. A defense that scores only a scalar projection cannot see the payload;
+scoring the orthogonal component, or the coherence of residuals across clients,
+is the natural next step.
+
+\vspace{2pt}\noindent\textbf{Compliance with ethical standards.} This is a
+theoretical and simulation study of an attack on a published defense; it used
+only public datasets (Fashion-MNIST, CIFAR-10) and involved no human subjects,
+personal data, or deployed system. We study this attack to expose a structural
+weakness in cosine-similarity trust so that defenses can address it, not to
+enable misuse: the construction needs control of a large client fraction, degrades
+clean accuracy, and --- as our results show --- is mitigated by scoring the
+component orthogonal to the reference. We disclosed our findings to the authors of
+the studied defense prior to publication and release our code to support
+verification and the development of countermeasures.
+
+\vfill\pagebreak
+\bibliographystyle{IEEEbib}
+\bibliography{refs}
+\end{document}

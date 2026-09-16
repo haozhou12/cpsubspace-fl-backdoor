@@ -1,0 +1,65 @@
+  [norm s0] r00 clean=0.450 ASR=0.242 TSmal=0.450 TSben=0.417 cos=0.448
+  [norm s0] r10 clean=0.742 ASR=0.096 TSmal=0.388 TSben=0.264 cos=0.388
+  [norm s0] r20 clean=0.763 ASR=0.205 TSmal=0.463 TSben=0.273 cos=0.461
+  [norm s0] r30 clean=0.803 ASR=0.243 TSmal=0.312 TSben=0.246 cos=0.328
+  [norm s0] r39 clean=0.808 ASR=0.113 TSmal=0.261 TSben=0.143 cos=0.234
+cpsub|norm|s0: final clean=0.808 ASR=0.113 (56s)
+  [norm s1] r00 clean=0.498 ASR=0.014 TSmal=0.475 TSben=0.459 cos=0.455
+  [norm s1] r10 clean=0.742 ASR=0.148 TSmal=0.284 TSben=0.219 cos=0.296
+  [norm s1] r20 clean=0.787 ASR=0.218 TSmal=0.292 TSben=0.212 cos=0.287
+  [norm s1] r30 clean=0.809 ASR=0.439 TSmal=0.200 TSben=0.177 cos=0.189
+  [norm s1] r39 clean=0.810 ASR=0.749 TSmal=0.329 TSben=0.211 cos=0.310
+cpsub|norm|s1: final clean=0.810 ASR=0.749 (50s)
+  [norm s2] r00 clean=0.365 ASR=0.000 TSmal=0.613 TSben=0.504 cos=0.566
+  [norm s2] r10 clean=0.793 ASR=0.099 TSmal=0.266 TSben=0.212 cos=0.279
+  [norm s2] r20 clean=0.838 ASR=0.179 TSmal=0.396 TSben=0.211 cos=0.414
+  [norm s2] r30 clean=0.838 ASR=0.331 TSmal=0.203 TSben=0.171 cos=0.209
+  [norm s2] r39 clean=0.856 ASR=0.641 TSmal=0.096 TSben=0.124 cos=0.113
+cpsub|norm|s2: final clean=0.856 ASR=0.641 (53s)
+  [norm s3] r00 clean=0.620 ASR=0.029 TSmal=0.511 TSben=0.543 cos=0.493
+  [norm s3] r10 clean=0.775 ASR=0.029 TSmal=0.219 TSben=0.125 cos=0.267
+  [norm s3] r20 clean=0.816 ASR=0.107 TSmal=0.268 TSben=0.166 cos=0.283
+  [norm s3] r30 clean=0.844 ASR=0.726 TSmal=0.293 TSben=0.173 cos=0.310
+  [norm s3] r39 clean=0.840 ASR=0.779 TSmal=0.252 TSben=0.141 cos=0.239
+cpsub|norm|s3: final clean=0.840 ASR=0.779 (52s)
+  [norm s4] r00 clean=0.552 ASR=0.071 TSmal=0.589 TSben=0.528 cos=0.548
+  [norm s4] r10 clean=0.794 ASR=0.229 TSmal=0.264 TSben=0.108 cos=0.306
+  [norm s4] r20 clean=0.780 ASR=0.251 TSmal=0.331 TSben=0.220 cos=0.331
+  [norm s4] r30 clean=0.816 ASR=0.401 TSmal=0.313 TSben=0.173 cos=0.316
+  [norm s4] r39 clean=0.842 ASR=0.279 TSmal=0.143 TSben=0.133 cos=0.129
+cpsub|norm|s4: final clean=0.842 ASR=0.279 (54s)
+  [clip s0] r00 clean=0.451 ASR=0.242 TSmal=0.450 TSben=0.417 cos=0.448
+  [clip s0] r10 clean=0.726 ASR=0.098 TSmal=0.265 TSben=0.138 cos=0.262
+  [clip s0] r20 clean=0.794 ASR=0.170 TSmal=0.291 TSben=0.150 cos=0.296
+  [clip s0] r30 clean=0.788 ASR=0.292 TSmal=0.261 TSben=0.116 cos=0.250
+  [clip s0] r39 clean=0.810 ASR=0.406 TSmal=0.240 TSben=0.149 cos=0.220
+cpsub|clip|s0: final clean=0.810 ASR=0.406 (51s)
+  [clip s1] r00 clean=0.498 ASR=0.014 TSmal=0.475 TSben=0.459 cos=0.455
+  [clip s1] r10 clean=0.737 ASR=0.175 TSmal=0.267 TSben=0.147 cos=0.275
+  [clip s1] r20 clean=0.817 ASR=0.236 TSmal=0.075 TSben=0.091 cos=0.074
+  [clip s1] r30 clean=0.850 ASR=0.473 TSmal=0.000 TSben=0.026 cos=-0.012
+  [clip s1] r39 clean=0.821 ASR=0.624 TSmal=0.160 TSben=0.158 cos=0.140
+cpsub|clip|s1: final clean=0.821 ASR=0.624 (52s)
+  [clip s2] r00 clean=0.365 ASR=0.000 TSmal=0.613 TSben=0.504 cos=0.566
+  [clip s2] r10 clean=0.809 ASR=0.111 TSmal=0.183 TSben=0.136 cos=0.191
+  [clip s2] r20 clean=0.807 ASR=0.290 TSmal=0.277 TSben=0.133 cos=0.290
+  [clip s2] r30 clean=0.846 ASR=0.559 TSmal=0.237 TSben=0.188 cos=0.236
+  [clip s2] r39 clean=0.858 ASR=0.793 TSmal=0.124 TSben=0.124 cos=0.131
+cpsub|clip|s2: final clean=0.858 ASR=0.793 (54s)
+  [clip s3] r00 clean=0.620 ASR=0.029 TSmal=0.511 TSben=0.543 cos=0.493
+  [clip s3] r10 clean=0.776 ASR=0.140 TSmal=0.189 TSben=0.099 cos=0.245
+  [clip s3] r20 clean=0.833 ASR=0.192 TSmal=0.215 TSben=0.141 cos=0.239
+  [clip s3] r30 clean=0.825 ASR=0.785 TSmal=0.191 TSben=0.084 cos=0.203
+  [clip s3] r39 clean=0.834 ASR=0.819 TSmal=0.320 TSben=0.155 cos=0.310
+cpsub|clip|s3: final clean=0.834 ASR=0.819 (51s)
+  [clip s4] r00 clean=0.558 ASR=0.079 TSmal=0.589 TSben=0.528 cos=0.548
+  [clip s4] r10 clean=0.784 ASR=0.238 TSmal=0.243 TSben=0.074 cos=0.268
+  [clip s4] r20 clean=0.804 ASR=0.262 TSmal=0.311 TSben=0.177 cos=0.295
+  [clip s4] r30 clean=0.793 ASR=0.535 TSmal=0.311 TSben=0.146 cos=0.318
+  [clip s4] r39 clean=0.847 ASR=0.486 TSmal=0.078 TSben=0.075 cos=0.069
+cpsub|clip|s4: final clean=0.847 ASR=0.486 (48s)
+
+===== SUMMARY =====
+cpsub norm  n=5 finalASR 0.512+-0.267 [0.113, 0.749, 0.641, 0.779, 0.279] succ(>=0.8)=0/5 | clean 0.831+-0.019
+cpsub clip  n=5 finalASR 0.626+-0.163 [0.406, 0.624, 0.793, 0.819, 0.486] succ(>=0.8)=1/5 | clean 0.834+-0.017
+total 522s

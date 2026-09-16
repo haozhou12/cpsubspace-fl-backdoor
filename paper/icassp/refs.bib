@@ -1,0 +1,307 @@
+% =====================================================================
+%  refs.bib  --  IEEE SPL letter
+%  Every entry below was checked against a primary source (arXiv abs
+%  page, publisher page, PMLR/NeurIPS proceedings, dblp, or the
+%  conference's own program page) on 2026-09-04.
+%  Entries that could NOT be fully cross-verified carry an explicit
+%  "% UNVERIFIED:" comment immediately above them.
+%  Conference names are given in FULL; abbreviate later for IEEE style.
+% =====================================================================
+
+
+% ---------------------------------------------------------------------
+% Core: the defense we attack
+% ---------------------------------------------------------------------
+
+% Verified: arXiv abs page (authors Peihua Mai, Ran Yan, Yan Pang;
+% comment "Accepted by NeurIPS 2024") + NeurIPS 2024 proceedings page
+% https://proceedings.neurips.cc/paper_files/paper/2024/hash/bcbdc25dc4f0be5ae8ac07232df6e33a-Abstract-Conference.html
+% NeurIPS 2024 proceedings assign no page numbers.
+@inproceedings{rflpa,
+  author    = {Peihua Mai and Ran Yan and Yan Pang},
+  title     = {{RFLPA}: A Robust Federated Learning Framework against Poisoning
+               Attacks with Secure Aggregation},
+  booktitle = {Advances in Neural Information Processing Systems 37
+               (NeurIPS 2024)},
+  year      = {2024},
+  note      = {arXiv:2405.15182}
+}
+
+% Verified: arXiv abs page (comment "Appeared in NDSS 2021") + NDSS 2021
+% accepted-papers list. DOI follows the NDSS 2021 registry.
+@inproceedings{fltrust,
+  author    = {Xiaoyu Cao and Minghong Fang and Jia Liu and
+               Neil Zhenqiang Gong},
+  title     = {{FLTrust}: Byzantine-robust Federated Learning via Trust
+               Bootstrapping},
+  booktitle = {Proceedings of the 28th Annual Network and Distributed System
+               Security Symposium (NDSS)},
+  year      = {2021},
+  doi       = {10.14722/ndss.2021.24434},
+  note      = {arXiv:2012.13995}
+}
+
+
+% ---------------------------------------------------------------------
+% Attack baseline
+% ---------------------------------------------------------------------
+
+% Verified: NDSS Symposium paper page (all four authors, University of
+% Wuerzburg) + NDSS 2024 program. Paper number 2024-1366 -> NDSS DOI.
+@inproceedings{autoadapt,
+  author    = {Torsten Krau{\ss} and Jan K{\"o}nig and Alexandra Dmitrienko and
+               Christian Kanzow},
+  title     = {Automatic Adversarial Adaption for Stealthy Poisoning Attacks in
+               Federated Learning},
+  booktitle = {Proceedings of the 31st Annual Network and Distributed System
+               Security Symposium (NDSS)},
+  year      = {2024},
+  doi       = {10.14722/ndss.2024.241366}
+}
+
+
+% ---------------------------------------------------------------------
+% Secure aggregation and its limits
+% ---------------------------------------------------------------------
+
+% Verified: ACM DL (10.1145/3133956.3133982) + dblp conf/ccs/BonawitzIKMMPRS17.
+@inproceedings{secagg,
+  author    = {Keith Bonawitz and Vladimir Ivanov and Ben Kreuter and
+               Antonio Marcedone and H. Brendan McMahan and Sarvar Patel and
+               Daniel Ramage and Aaron Segal and Karn Seth},
+  title     = {Practical Secure Aggregation for Privacy-Preserving Machine
+               Learning},
+  booktitle = {Proceedings of the 2017 ACM SIGSAC Conference on Computer and
+               Communications Security (CCS)},
+  pages     = {1175--1191},
+  year      = {2017},
+  doi       = {10.1145/3133956.3133982}
+}
+
+% Verified: PMLR v139 page (lam21b) + arXiv abs page.
+@inproceedings{graddisagg,
+  author    = {Maximilian Lam and Gu-Yeon Wei and David Brooks and
+               Vijay Janapa Reddi and Michael Mitzenmacher},
+  title     = {Gradient Disaggregation: Breaking Privacy in Federated Learning
+               by Reconstructing the User Participant Matrix},
+  booktitle = {Proceedings of the 38th International Conference on Machine
+               Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {139},
+  pages     = {5959--5968},
+  year      = {2021},
+  note      = {arXiv:2106.06089}
+}
+
+% Verified: ACM DL (10.1145/3548606.3560557) + arXiv abs page.
+@inproceedings{eluding,
+  author    = {Dario Pasquini and Danilo Francati and Giuseppe Ateniese},
+  title     = {Eluding Secure Aggregation in Federated Learning via Model
+               Inconsistency},
+  booktitle = {Proceedings of the 2022 ACM SIGSAC Conference on Computer and
+               Communications Security (CCS)},
+  pages     = {2429--2443},
+  year      = {2022},
+  doi       = {10.1145/3548606.3560557},
+  note      = {arXiv:2111.07380}
+}
+
+
+% ---------------------------------------------------------------------
+% Attacks on robust aggregation
+% ---------------------------------------------------------------------
+
+% Verified: dblp conf/sp/ChoudharyKS24 (SP 2024, pp. 1325-1344) +
+% IEEE Xplore document 10646844 + arXiv abs page.
+@inproceedings{hidra,
+  author    = {Sarthak Choudhary and Aashish Kolluri and Prateek Saxena},
+  title     = {Attacking Byzantine Robust Aggregation in High Dimensions},
+  booktitle = {2024 IEEE Symposium on Security and Privacy (S\&P)},
+  pages     = {1325--1344},
+  year      = {2024},
+  note      = {arXiv:2312.14461}
+}
+
+% Verified: NeurIPS 2019 proceedings page + dblp conf/nips/BaruchBG19.
+% NOTE: the published author order is Gilad Baruch, Moran Baruch,
+% Yoav Goldberg (the arXiv listing shows Moran first -- proceedings order
+% is used here).
+@inproceedings{alie,
+  author    = {Gilad Baruch and Moran Baruch and Yoav Goldberg},
+  title     = {A Little Is Enough: Circumventing Defenses for Distributed
+               Learning},
+  booktitle = {Advances in Neural Information Processing Systems 32
+               (NeurIPS 2019)},
+  pages     = {8632--8642},
+  year      = {2019},
+  note      = {arXiv:1902.06156}
+}
+
+
+% ---------------------------------------------------------------------
+% Classical robust aggregation rules
+% ---------------------------------------------------------------------
+
+% Verified: NeurIPS 2017 proceedings page + dblp conf/nips/BlanchardMGS17
+% (pp. 119-129).
+@inproceedings{krum,
+  author    = {Peva Blanchard and El Mahdi El Mhamdi and Rachid Guerraoui and
+               Julien Stainer},
+  title     = {Machine Learning with Adversaries: Byzantine Tolerant Gradient
+               Descent},
+  booktitle = {Advances in Neural Information Processing Systems 30
+               (NIPS 2017)},
+  pages     = {119--129},
+  year      = {2017}
+}
+
+% Verified: PMLR v80 page (yin18a, pp. 5650-5659) + dblp conf/icml/YinCRB18.
+% NOTE: PMLR renders the third author as "Ramchandran Kannan" (a name-order
+% artifact); dblp and the arXiv version give "Kannan Ramchandran", used here.
+@inproceedings{trimmedmean,
+  author    = {Dong Yin and Yudong Chen and Kannan Ramchandran and
+               Peter L. Bartlett},
+  title     = {Byzantine-Robust Distributed Learning: Towards Optimal
+               Statistical Rates},
+  booktitle = {Proceedings of the 35th International Conference on Machine
+               Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {80},
+  pages     = {5650--5659},
+  year      = {2018},
+  note      = {arXiv:1803.01498}
+}
+
+
+% ---------------------------------------------------------------------
+% Backdoor attacks (foundational)
+% ---------------------------------------------------------------------
+
+% Verified: dblp journals/access/GuLDG19 (IEEE Access vol. 7,
+% pp. 47230-47244, 2019). This is the peer-reviewed version of the
+% arXiv:1708.06733 preprint (the journal version adds author Kang Liu and
+% retitles from "Identifying Vulnerabilities in the Machine Learning Model
+% Supply Chain" to "Evaluating Backdooring Attacks on Deep Neural Networks").
+@article{badnets,
+  author  = {Tianyu Gu and Kang Liu and Brendan Dolan-Gavitt and
+             Siddharth Garg},
+  title   = {{BadNets}: Evaluating Backdooring Attacks on Deep Neural Networks},
+  journal = {IEEE Access},
+  volume  = {7},
+  pages   = {47230--47244},
+  year    = {2019},
+  doi     = {10.1109/ACCESS.2019.2909068}
+}
+
+
+% ---------------------------------------------------------------------
+% Architecture / normalization
+% ---------------------------------------------------------------------
+
+% Verified: ECCV 2018 Open Access Repository + Springer LNCS chapter
+% 10.1007/978-3-030-01261-8_1 (Part XIII, pp. 3-19).
+@inproceedings{groupnorm,
+  author    = {Yuxin Wu and Kaiming He},
+  title     = {Group Normalization},
+  booktitle = {Proceedings of the European Conference on Computer Vision
+               (ECCV)},
+  pages     = {3--19},
+  year      = {2018},
+  doi       = {10.1007/978-3-030-01261-8_1},
+  note      = {arXiv:1803.08494}
+}
+
+% Verified: PMLR v119 page (hsieh20a, pp. 4387-4398) +
+% dblp conf/icml/HsiehPMG20.
+@inproceedings{noniid,
+  author    = {Kevin Hsieh and Amar Phanishayee and Onur Mutlu and
+               Phillip B. Gibbons},
+  title     = {The Non-{IID} Data Quagmire of Decentralized Machine Learning},
+  booktitle = {Proceedings of the 37th International Conference on Machine
+               Learning (ICML)},
+  series    = {Proceedings of Machine Learning Research},
+  volume    = {119},
+  pages     = {4387--4398},
+  year      = {2020},
+  note      = {arXiv:1910.00189}
+}
+
+% Verified: CVF Open Access CVPR 2016 + IEEE Xplore (pp. 770-778).
+@inproceedings{resnet,
+  author    = {Kaiming He and Xiangyu Zhang and Shaoqing Ren and Jian Sun},
+  title     = {Deep Residual Learning for Image Recognition},
+  booktitle = {Proceedings of the IEEE Conference on Computer Vision and
+               Pattern Recognition (CVPR)},
+  pages     = {770--778},
+  year      = {2016},
+  doi       = {10.1109/CVPR.2016.90}
+}
+
+
+% =====================================================================
+%  Signal-processing-community anchors (SPL / TSP / TIFS)
+%  Cite these to connect the letter to prior work in this journal family.
+% =====================================================================
+
+% Verified: dblp journals/spl/MiaoNT24 -- IEEE Signal Processing Letters,
+% vol. 31, pp. 1024-1028, 2024, DOI 10.1109/LSP.2024.3384077.
+@article{spl_fl1,
+  author  = {Yifan Miao and Wanli Ni and Hui Tian},
+  title   = {One-Bit Aggregation for Over-the-Air Federated Learning Against
+             Byzantine Attacks},
+  journal = {IEEE Signal Processing Letters},
+  volume  = {31},
+  pages   = {1024--1028},
+  year    = {2024},
+  doi     = {10.1109/LSP.2024.3384077}
+}
+
+% Verified: IEEE TSP vol. 70, pp. 1142-1154, 2022,
+% DOI 10.1109/TSP.2022.3153135 (the RFA / geometric-median aggregator).
+@article{spl_fl2,
+  author  = {Krishna Pillutla and Sham M. Kakade and Zaid Harchaoui},
+  title   = {Robust Aggregation for Federated Learning},
+  journal = {IEEE Transactions on Signal Processing},
+  volume  = {70},
+  pages   = {1142--1154},
+  year    = {2022},
+  doi     = {10.1109/TSP.2022.3153135}
+}
+
+% Verified: IEEE Xplore document 10136231 -- IEEE Transactions on
+% Information Forensics and Security, vol. 18, pp. 3289-3304, 2023,
+% DOI 10.1109/TIFS.2023.3280032. Directly on-topic: backdoor detection
+% *under* secure aggregation.
+@article{spl_fl3,
+  author  = {Zhuosheng Zhang and Jiarui Li and Shucheng Yu and
+             Christian Makaya},
+  title   = {{SAFELearning}: Secure Aggregation in Federated Learning with
+             Backdoor Detectability},
+  journal = {IEEE Transactions on Information Forensics and Security},
+  volume  = {18},
+  pages   = {3289--3304},
+  year    = {2023},
+  doi     = {10.1109/TIFS.2023.3280032}
+}
+
+% Verified: IEEE Signal Processing Letters, vol. 29, pp. 409-413, 2022
+% (dblp journals/spl/UddinXYG22). DOI not independently retrieved -- omit
+% or fill in from IEEE Xplore before submission.
+% DOI not retrievable in two independent searches; citation itself
+% (authors/title/volume/pages/year) confirmed from multiple sources.
+@article{spl_fl4,
+  author  = {Md Palash Uddin and Yong Xiang and John Yearwood and
+             Longxiang Gao},
+  title   = {Robust Federated Averaging via Outlier Pruning},
+  journal = {IEEE Signal Processing Letters},
+  volume  = {29},
+  pages   = {409--413},
+  year    = {2022},
+  doi     = {10.1109/LSP.2021.3134893}
+}
+
+% NOTE (2026-09-04): an SPL 2026 entry on distributed backdoor attacks against
+% KD-based FL was proposed but REMOVED — two independent verification attempts
+% (agent + maintainer) failed to confirm it on IEEE Xplore or any second source.
+% Policy: never cite what cannot be verified.
+

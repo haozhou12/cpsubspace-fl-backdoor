@@ -1,0 +1,10 @@
+__pycache__/
+*.pyc
+data/
+*.aux
+*.bbl
+*.blg
+*.out
+smoke*
+*DONE
+figs/*.png
