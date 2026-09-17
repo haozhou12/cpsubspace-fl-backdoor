@@ -306,7 +306,7 @@ Cosine-similarity trust with norm equalization constrains one direction of a
 client update and fixes the magnitude, but not the direction, of everything
 orthogonal to it. A closed-form, norm-matched construction exploits exactly that:
 it plants a backdoor under the published RFLPA rule with no constraint-satisfaction
-search. Its clean-accuracy cost --- $2.6$ points at $\tau=0.97$ on Fashion-MNIST, smaller at $\tau=0.7$, larger on CIFAR-10 --- is incurred by the cover, not the backdoor payload: a random or absent payload costs nearly as much while planting nothing. The analysis suggests two failure mechanisms, clamping of a poor anchor estimate and payload starvation, and both appear in the sweep. A defense that scores only a scalar projection cannot see the payload;
+search. Its clean-accuracy cost --- $2.6$ points at $\tau=0.97$ on Fashion-MNIST, smaller at $\tau=0.7$, larger on CIFAR-10 --- is not the price of the backdoor payload: a random or absent payload costs nearly as much while planting nothing, though we do not fully separate the cover and payload contributions. The analysis suggests two failure mechanisms, clamping of a poor anchor estimate and payload starvation, and both appear in the sweep. A defense that scores only a scalar projection cannot see the payload;
 scoring the orthogonal component, or the coherence of residuals across clients,
 is the natural next step.
 
@@ -315,11 +315,7 @@ theoretical and simulation study of an attack on a published defense; it used
 only public datasets (Fashion-MNIST, CIFAR-10) and involved no human subjects,
 personal data, or deployed system. We study this attack to expose a structural
 weakness in cosine-similarity trust so that defenses can address it, not to
-enable misuse: the construction needs control of a large client fraction, degrades
-clean accuracy, and --- as our results show --- is mitigated by scoring the
-component orthogonal to the reference. We disclosed our findings to the authors of
-the studied defense prior to publication and release our code to support
-verification and the development of countermeasures.
+enable misuse: the construction needs control of a large client fraction and degrades clean accuracy, and is plausibly countered by a defense that also scores the component orthogonal to the reference --- a direction we leave to future work. We follow responsible-disclosure practice and release our code to support verification and the development of countermeasures.
 
 \vfill\pagebreak
 \bibliographystyle{IEEEbib}
